@@ -257,6 +257,52 @@ function main() {
       target.style.display = 'block';
     }
   });
+
+  delegate(document, '.account__header__fields dl', 'click', ( { target } ) => {
+    const row = target.parentNode;
+
+    if (row.children[0].style.maxHeight === '48px' || row.children[1].style.maxHeight === '48px') {
+        row.children[0].style.maxHeight = 'none';
+        row.children[1].style.maxHeight = 'none';
+        row.children[0].style.whiteSpace = 'normal';
+        row.children[1].style.whiteSpace = 'normal';
+
+        /* if (window.getComputedStyle(row.children[0]).height < window.getComputedStyle(row.children[1]).height) {
+          let newHeight = window.getComputedStyle(row.children[1]).height);
+          window.getComputedStyle(row.children[0]).height = newHeight;
+        } */
+
+        console.log(window.getComputedStyle(row.children[0]));
+
+
+      } else {
+        row.children[0].style.maxHeight = '48px';
+        row.children[1].style.maxHeight = '48px';
+        row.children[0].style.whiteSpace = 'nowrap';
+        row.children[1].style.whiteSpace = 'nowrap';
+      }
+  });
+
+  window.onload = function() {
+
+    const dls = document.querySelectorAll('.account__header__fields dl');
+    console.log(dls);
+
+    for (let i = 0; i < dls.length; i++) {
+
+      if(dls[i].children[0].offsetWidth < dls[i].children[0].scrollWidth ||
+         dls[i].children[1].offsetWidth < dls[i].children[1].scrollWidth) {
+           dls[i].children[0].style.maxHeight = '48px';
+           dls[i].children[1].style.maxHeight = '48px';
+           dls[i].children[0].style.whiteSpace = 'nowrap';
+           dls[i].children[1].style.whiteSpace = 'nowrap';
+           dls[i].style.cursor = 'pointer';
+         }
+
+    }
+
+  };
+
 }
 
 loadPolyfills().then(main).catch(error => {
